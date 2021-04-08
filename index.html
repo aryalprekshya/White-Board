@@ -32,7 +32,8 @@
             flex-direction: column;
             background-color: lightgray;
             z-index: 10;
-            margin-left: 2rem;
+            margin-left: 3rem;
+            margin-top: 2rem
         }
 
         button {
@@ -47,12 +48,13 @@
             display: inline-block;
             font-size: 16px;
             cursor: pointer;
+            margin-top: -2px;
         }
 
         .eraser {
             background-color: white;
             color: black;
-            border-bottom: 2px solid #4CAF50;
+            border-bottom: 1px solid #4CAF50;
             padding: 18px 15px;
             text-decoration: none;
             display: inline-block;
@@ -106,76 +108,22 @@
             border-bottom: 1px dotted black;
         }
 
-        /* .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            /* bottom: -50%;
-            right: -100%; 
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        } */
-
         .tooltip .tooltiptext {
             visibility: hidden;
-            margin-left: 2.5rem;
+            margin-left: 3rem;
             width: 120px;
             background-color: black;
             color: #fff;
             text-align: center;
             border-radius: 6px;
             padding: 5px 0;
-
+            font-size: 14px;
             /* Position the tooltip */
             position: absolute;
             z-index: 1;
         }
-
-        .tooltip .tooltiptext-color {
-            visibility: hidden;
-            margin-left: 14rem;
-            width: 120px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            font-size: 18px;
-            /* Position the tooltip */
-            position: absolute;
-            z-index: 1;
-        }
-
-        /* .tooltip .tooltiptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        } */
-
-        /* .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        } */
 
         .tooltip:hover .tooltiptext {
-            visibility: visible;
-        }
-
-        .tooltip:hover .tooltiptext-color {
             visibility: visible;
         }
     </style>
@@ -191,7 +139,9 @@
                     <label>
                         <i class="fas fa-palette" style="font-size:20px;color:#BF5FFF	"></i>
                         <input type="color" id="color" onClick="optionClicked(this.id)" style="visibility:hidden" />
-                        <span class="tooltiptext-color">Select Color</span>
+                        <span class="tooltiptext"
+                            style="margin-left:15rem; margin-bottom: 0.75rem; font-size:16px;">Select
+                            Color</span>
                     </label>
                 </div>
 
@@ -216,7 +166,7 @@
                 <div class="tooltip">
                     <button id="doodle" onClick="optionClicked(this.id)" style="width:6rem;"><i class="fas fa-brush"
                             style="font-size:20px;"></i>
-                        <span class="tooltiptext">
+                        <span class="tooltiptext" style="margin-left: 3.2rem;">
                             Doodle Brush
                         </span>
                     </button>
