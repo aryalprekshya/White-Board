@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>White Board</title>
+</head>
+
+<body>
+    <style>
+        .container {
+            position: relative;
+        }
+
+        .container canvas {
+            position: absolute;
+        }
+
+        .container .bar {
+            position: absolute;
+        }
+
+        .draw {
+            border: 1px solid red;
+        }
+
+        .bar {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            background-color: lightgray;
+            z-index: 10;
+            margin-left: 1.5rem
+        }
+
+        button {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+            /* border-left: 2px solid #4CAF50;
+      border-right: 2px solid #4CAF50; */
+            padding: 15px 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input {
+            cursor: pointer;
+            width: 90%;
+            height: 12%;
+            border: 2px solid #4CAF50;
+
+        }
+
+        h1 {
+            font-family: rubik;
+            color: "#212529";
+            z-index: 20;
+            color: #4CAF50;
+            background-color: white;
+        }
+
+        h1::after {
+            content: "";
+            display: block;
+            margin: 0 auto;
+            width: 45%;
+            padding-top: 0.35em;
+            border-bottom: 3px solid #ff4a1c;
+            z-index: 10;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            z-index: 10;
+            background-color: white;
+        }
+    </style>
+    <div class="container">
+
+        <div>
+            <canvas id="draw" width="800" height="800"></canvas>
+            <div class="heading">
+                <h1>White Board</h1>
+            </div>
+            <div class="bar">
+                <input type="color" id="color" onClick="optionClicked(this.id)" />
+                <button id="pen1" onClick="optionClicked(this.id)">Pen 1</button>
+                <button id="pen2" onClick="optionClicked(this.id)">Pen 2</button>
+                <button id="doodle" onClick="optionClicked(this.id)">Doodle</button>
+                <button id="play" onClick="optionClicked(this.id)">Play</button>
+                <button id="eraseAll" onClick="optionClicked(this.id)">Erase All</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const canvas = document.querySelector("#draw");
+        const ctx = canvas.getContext("2d");
+        var color = document.getElementById("color");
+        ctx.strokeStyle = color.value;
+
+        //giving width and height full screen
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        //for end and beginning point
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let hue = 0;
+
+        let direction = true;
+        const default_line_width = 2;
+
+        ctx.lineWidth = default_line_width;
+
+
+        /* lets you draw (case 1)*/
+        function penDraw1(e) {
+            if (!isDrawing) return;
+            ctx.lineWidth = default_line_width;
+
+            ctx.strokeStyle = color.value;
+
+            ctx.beginPath();
+            //start from
+            ctx.moveTo(lastX, lastY);
+            //go to
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+
+        }
+
+        /* adding hue case 2*/
+        function penDraw2(e) {
+            if (!isDrawing) return;
+            ctx.lineWidth = default_line_width;
+            ctx.strokeStyle = "#000";
+            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+            hue++;
+
+            if (hue >= 360) {
+                hue = 0;
+            }
+
+        }
+
+        /* case 3 play with width of the line*/
+        function doddleDraw(e) {
+            if (!isDrawing) return;
+            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+            hue++;
+
+            if (hue >= 360) {
+                hue = 0;
+            }
+
+            if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+                direction = !direction;
+            }
+            if (direction) {
+                ctx.lineWidth++;
+            } else {
+                ctx.lineWidth--;
+            }
+
+        }
+
+        /* Creates a line starting from zero (case 5) */
+        function playDraw(e) {
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+        }
+
+
+        function eraseAll(e) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function changeColor(e) {
+            function change(e) {
+                console.log(this.value)
+                color = this.value;
+            }
+            document.getElementById('color').onchange = color
+            ctx.strokeStyle = color;
+        }
+
+        function setDrawingTrue(e) {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        }
+
+        function setDrawingFalse() {
+            isDrawing = false;
+            console.log(isDrawing)
+        }
+
+        function clearEventListeners() {
+            canvas.removeEventListener("mousemove", penDraw1);
+            canvas.removeEventListener("mousemove", penDraw2);
+            canvas.removeEventListener("mousemove", doddleDraw);
+            canvas.removeEventListener("mousemove", playDraw);
+        }
+        canvas.addEventListener("mousedown", setDrawingTrue);
+        canvas.addEventListener("mouseup", setDrawingFalse);
+        canvas.addEventListener("mouseout", setDrawingFalse);
+
+
+        function optionClicked(clicked_id) {
+            clearEventListeners();
+
+            switch (clicked_id) {
+                case "pen1":
+                    canvas.addEventListener("mousemove", penDraw1);
+                    break;
+
+                case "pen2":
+                    canvas.addEventListener("mousemove", penDraw2);
+
+                    break;
+
+                case "doodle":
+                    canvas.addEventListener("mousemove", doddleDraw);
+                    break;
+
+
+                case "play":
+                    ctx.strokeStyle = color.value;
+                    ctx.lineWidth = default_line_width;
+                    canvas.addEventListener("mousemove", playDraw);
+                    break;
+
+                case "eraseAll":
+                    eraseAll();
+                    break;
+
+                default:
+                    console.log("Nothing to draw")
+            }
+        }
+    </script>
+</body>
+
+</html>
