@@ -42,7 +42,7 @@
             border-right: 2px solid #4CAF50;
             border-left: 2px solid #4CAF50;
             border-bottom: 1px solid #4CAF50;
-            padding: 18px 15px;
+            padding: 18px 0px;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
@@ -99,6 +99,85 @@
             z-index: 10;
             background-color: white;
         }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+        /* .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            /* bottom: -50%;
+            right: -100%; 
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        } */
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            margin-left: 2.5rem;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip .tooltiptext-color {
+            visibility: hidden;
+            margin-left: 14rem;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            font-size: 18px;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        /* .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        } */
+
+        /* .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        } */
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
+        .tooltip:hover .tooltiptext-color {
+            visibility: visible;
+        }
     </style>
     <div class="container">
 
@@ -108,21 +187,59 @@
                 <h1>White Board</h1>
             </div>
             <div class="bar">
-                <label>
-                    <i class="fas fa-palette" style="font-size:20px;color:#BF5FFF	"></i>
-                    <input type="color" id="color" onClick="optionClicked(this.id)" style="visibility:hidden" />
-                </label>
+                <div class="tooltip">
+                    <label>
+                        <i class="fas fa-palette" style="font-size:20px;color:#BF5FFF	"></i>
+                        <input type="color" id="color" onClick="optionClicked(this.id)" style="visibility:hidden" />
+                        <span class="tooltiptext-color">Select Color</span>
+                    </label>
+                </div>
 
-                <button id="pen1" onClick="optionClicked(this.id)"><i class="fas fa-pen"
-                        style="font-size:20px;"></i></button>
-                <button id="pen2" onClick="optionClicked(this.id)"><i class="fas fa-pen"
-                        style="font-size:20px;color: #ff4a1c;"></i></button>
-                <button id="doodle" onClick="optionClicked(this.id)"><i class="fas fa-brush"
-                        style="font-size:20px;"></i></button>
-                <button id="play" onClick="optionClicked(this.id)"><i class="fas fa-pencil-alt"
-                        style="font-size:20px; color:rgb(231, 90, 124)"></i></button>
-                <button id="eraseAll" onClick="optionClicked(this.id)" class="eraser"><i class="fas fa-eraser"
-                        style="font-size:20px;"></i></button>
+                <div class="tooltip">
+                    <button id="pen1" onClick="optionClicked(this.id)" style="width:6rem;">
+                        <i class="fas fa-pen" style="font-size:20px;"></i>
+                        <span class="tooltiptext">
+                            Pen
+                        </span>
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <button id="pen2" onClick="optionClicked(this.id)" style="width:6rem;"><i class="fas fa-pen"
+                            style="font-size:20px;color: #ff4a1c;"></i>
+                        <span class="tooltiptext">
+                            Rainbow Pen
+                        </span>
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <button id="doodle" onClick="optionClicked(this.id)" style="width:6rem;"><i class="fas fa-brush"
+                            style="font-size:20px;"></i>
+                        <span class="tooltiptext">
+                            Doodle Brush
+                        </span>
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <button id="play" onClick="optionClicked(this.id)" style="width:6rem;"><i class="fas fa-pencil-alt"
+                            style="font-size:20px; color:rgb(231, 90, 124)"></i>
+                        <span class="tooltiptext">
+                            Pencil
+                        </span>
+                    </button>
+                </div>
+
+                <div class="tooltip">
+                    <button id="eraseAll" onClick="optionClicked(this.id)" class="eraser" style="width:6rem;"><i
+                            class="fas fa-eraser" style="font-size:20px;"></i>
+                        <span class="tooltiptext">
+                            Eraser
+                        </span>
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
