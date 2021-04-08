@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>White Board - By Prekshya Aryal</title>
+    <script src="https://kit.fontawesome.com/ed71a6a933.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -31,28 +32,46 @@
             flex-direction: column;
             background-color: lightgray;
             z-index: 10;
-            margin-left: 1.5rem
+            margin-left: 2rem;
         }
 
         button {
             background-color: white;
             color: black;
-            border: 2px solid #4CAF50;
-            /* border-left: 2px solid #4CAF50;
-      border-right: 2px solid #4CAF50; */
-            padding: 15px 5px;
+            border-top: 2px solid #4CAF50;
+            border-right: 2px solid #4CAF50;
+            border-left: 2px solid #4CAF50;
+            border-bottom: 1px solid #4CAF50;
+            padding: 18px 15px;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
             cursor: pointer;
         }
 
-        input {
+        .eraser {
+            background-color: white;
+            color: black;
+            border-bottom: 2px solid #4CAF50;
+            padding: 18px 15px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
             cursor: pointer;
-            width: 90%;
-            height: 12%;
-            border: 2px solid #4CAF50;
+        }
 
+        label {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+            padding: 18px 0px;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: -1.5rem;
+            cursor: pointer;
         }
 
         h1 {
@@ -89,16 +108,23 @@
                 <h1>White Board</h1>
             </div>
             <div class="bar">
-                <input type="color" id="color" onClick="optionClicked(this.id)" />
-                <button id="pen1" onClick="optionClicked(this.id)">Pen 1</button>
-                <button id="pen2" onClick="optionClicked(this.id)">Pen 2</button>
-                <button id="doodle" onClick="optionClicked(this.id)">Doodle</button>
-                <button id="play" onClick="optionClicked(this.id)">Play</button>
-                <button id="eraseAll" onClick="optionClicked(this.id)">Erase All</button>
+                <label>
+                    <i class="fas fa-palette" style="font-size:20px;color:#BF5FFF	"></i>
+                    <input type="color" id="color" onClick="optionClicked(this.id)" style="visibility:hidden" />
+                </label>
+
+                <button id="pen1" onClick="optionClicked(this.id)"><i class="fas fa-pen"
+                        style="font-size:20px;"></i></button>
+                <button id="pen2" onClick="optionClicked(this.id)"><i class="fas fa-pen"
+                        style="font-size:20px;color: #ff4a1c;"></i></button>
+                <button id="doodle" onClick="optionClicked(this.id)"><i class="fas fa-brush"
+                        style="font-size:20px;"></i></button>
+                <button id="play" onClick="optionClicked(this.id)"><i class="fas fa-pencil-alt"
+                        style="font-size:20px; color:rgb(231, 90, 124)"></i></button>
+                <button id="eraseAll" onClick="optionClicked(this.id)" class="eraser"><i class="fas fa-eraser"
+                        style="font-size:20px;"></i></button>
             </div>
-
         </div>
-
     </div>
 
     <script>
@@ -125,14 +151,11 @@
 
         ctx.lineWidth = default_line_width;
 
-
         /* lets you draw (case 1)*/
         function penDraw1(e) {
             if (!isDrawing) return;
             ctx.lineWidth = default_line_width;
-
             ctx.strokeStyle = color.value;
-
             ctx.beginPath();
             //start from
             ctx.moveTo(lastX, lastY);
@@ -160,7 +183,6 @@
             if (hue >= 360) {
                 hue = 0;
             }
-
         }
 
         /* case 3 play with width of the line*/
@@ -187,17 +209,15 @@
             } else {
                 ctx.lineWidth--;
             }
-
         }
 
-        /* Creates a line starting from zero (case 5) */
+        /* (case 5) */
         function playDraw(e) {
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
             ctx.lineTo(e.offsetX, e.offsetY);
             ctx.stroke();
         }
-
 
         function eraseAll(e) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -243,13 +263,11 @@
 
                 case "pen2":
                     canvas.addEventListener("mousemove", penDraw2);
-
                     break;
 
                 case "doodle":
                     canvas.addEventListener("mousemove", doddleDraw);
                     break;
-
 
                 case "play":
                     ctx.strokeStyle = color.value;
