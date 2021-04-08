@@ -118,9 +118,19 @@
             border-radius: 6px;
             padding: 5px 0;
             font-size: 14px;
-            /* Position the tooltip */
             position: absolute;
             z-index: 1;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent black transparent transparent;
         }
 
         .tooltip:hover .tooltiptext {
@@ -218,7 +228,6 @@
 
         ctx.lineWidth = default_line_width;
 
-        /* lets you draw (case 1)*/
         function penDraw1(e) {
             if (!isDrawing) return;
             ctx.lineWidth = default_line_width;
@@ -230,10 +239,8 @@
             ctx.lineTo(e.offsetX, e.offsetY);
             ctx.stroke();
             [lastX, lastY] = [e.offsetX, e.offsetY];
-
         }
 
-        /* adding hue case 2*/
         function penDraw2(e) {
             if (!isDrawing) return;
             ctx.lineWidth = default_line_width;
@@ -252,7 +259,6 @@
             }
         }
 
-        /* case 3 play with width of the line*/
         function doddleDraw(e) {
             if (!isDrawing) return;
             ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
@@ -278,8 +284,8 @@
             }
         }
 
-        /* (case 5) */
         function playDraw(e) {
+            if (!isDrawing) return;
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
             ctx.lineTo(e.offsetX, e.offsetY);
@@ -315,6 +321,7 @@
             canvas.removeEventListener("mousemove", doddleDraw);
             canvas.removeEventListener("mousemove", playDraw);
         }
+
         canvas.addEventListener("mousedown", setDrawingTrue);
         canvas.addEventListener("mouseup", setDrawingFalse);
         canvas.addEventListener("mouseout", setDrawingFalse);
